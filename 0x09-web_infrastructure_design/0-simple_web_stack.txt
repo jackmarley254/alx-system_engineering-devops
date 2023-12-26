@@ -1,1 +1,12 @@
- I AM A man
+# ALX PROJECT
+## WEB INFRASTRUCTURE DESIGN
+
+- Task 0.
+- Definitions and Explanations.
+- 1. What is a server; A server is a device, a virtual device or computer program or providing
+     functionality for other programs or devices, called “clients”.
+
+- 2. What is the role of a domain name; A domain name serves to identify Internet
+     resources, such as computers, networks, and services with a text-based label that is
+     easier to memorize than numerical addresses (IP addresses).
+
