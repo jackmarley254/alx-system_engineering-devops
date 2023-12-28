@@ -1,4 +1,9 @@
-#!/usr/bin/env bash
-# This script displays all active IPv4 addresses on the machine.
+#!/bin/bash
+
+# This script displays all active IPv4 addre
+if ! command -v ifconfig &> /dev/null; then
+    echo "Error: ifconfig command not found. Make sure the net-tools package is installed."
+    exit 1
+fi
 
 ifconfig | grep -Eo "inet (addr:)?([0-9]*\.){3}[0-9]*" | cut -b 6-
