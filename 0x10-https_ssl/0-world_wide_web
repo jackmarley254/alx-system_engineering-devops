@@ -2,16 +2,46 @@
 # shellcheck disable=SC2086
 # Information about server domains
 
+#check_domain() {
+# Check for a valid domain
+#   SUBDOMAINS=("www"  "lb-01" "web-01" "web-02")
+#   if [ -z "$2" ]; then
+#       for i in "${SUBDOMAINS[@]}"; do
+#           dig "$i.$1" | grep -A1 'ANSWER SECTION:' | tail -n1 | awk '{split($0, SUBDOMAIN, "."); print "The subdomain " SUBDOMAIN[1] " is a " $4 " record and points to " $5}'
+#       done
+#   else
+#       dig "$2.$1" | grep -A1 'ANSWER SECTION:' | tail -n1 | awk '{split($0, SUBDOMAIN, "."); print "The subdomain " SUBDOMAIN[1] " is a " $4 " record and points to " $5}'
+#    fi
+#}
+
+#check_domain "$1" "$2"
+
+#!/usr/bin/env bash
+# shellcheck disable=SC2086
+# Information about server domains
+
 check_domain() {
 # Check for a valid domain
-    SUBDOMAINS=("www"  "lb-01" "web-01" "web-02")
-    if [ -z "$2" ]; then
-        for i in "${SUBDOMAINS[@]}"; do
-            dig "$i.$1" | grep -A1 'ANSWER SECTION:' | tail -n1 | awk '{split($0, SUBDOMAIN, "."); print "The subdomain " SUBDOMAIN[1] " is a " $4 " record and points to " $5}'
-        done
-    else
-        dig "$2.$1" | grep -A1 'ANSWER SECTION:' | tail -n1 | awk '{split($0, SUBDOMAIN, "."); print "The subdomain " SUBDOMAIN[1] " is a " $4 " record and points to " $5}'
-    fi
+	SUBDOMAINS=("www" "lb-01" "web-01" "web-02")
+		IP_ADDRESS="54.157.166.52"
+
+		if [ -z "$2" ]; then
+			for i in "${SUBDOMAINS[@]}"; do
+				IP_ADDRESS=$(dig +short "$i.$1")
+					if [ -n "$IP_ADDRESS" ]; then
+						echo "The subdomain $i is a $(dig "$i.$1" | grep -A1 'ANSWER SECTION:' | tail -n1 | awk '{print $4}') record and points to $IP_ADDRESS"
+					else
+						echo "The subdomain $i does not exist for $1."
+							fi
+							done
+		else
+			IP_ADDRESS=$(dig +short "$2.$1")
+				if [ -n "$IP_ADDRESS" ]; then
+					echo "The subdomain $2 is a $(dig "$2.$1" | grep -A1 'ANSWER SECTION:' | tail -n1 | awk '{print $4}') record and points to $IP_ADDRESS"
+				else
+					echo "The subdomain $2 does not exist for $1."
+						fi
+						fi
 }
 
 check_domain "$1" "$2"
