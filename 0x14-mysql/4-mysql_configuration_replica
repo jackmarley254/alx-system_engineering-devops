@@ -1,0 +1,13 @@
+[mysqld]
+datadir=/var/lib/mysql
+socket=/var/run/mysqld/mysqld.sock
+symbolic-links=0
+
+# Replication configuration
+server-id=2
+relay-log=mysql-relay-bin
+log_bin=mysql-bin
+binlog_do_db=tyrell_corp
+
+# Other MySQL configurations...
+
